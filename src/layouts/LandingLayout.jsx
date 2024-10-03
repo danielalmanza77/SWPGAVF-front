@@ -1,8 +1,13 @@
-import React from 'react'
+
+import { Outlet } from 'react-router-dom'
+import Navbar from '../components/NavBar'
 
 const LandingLayout = () => {
   return (
-    <div>LandingLayout</div>
+    <>
+      <Navbar />
+      <Outlet />
+    </>
   )
 }
 

@@ -1,14 +1,19 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import './index.css'
+import LandingLayout from './layouts/LandingLayout'
+import Products from './pages/Products'
 
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
     <>
-      <h1>Main</h1>
+      <BrowserRouter>
+        <Routes>
+          <Route path='/' element={<LandingLayout />} >
+            <Route index path='products' element={<Products />}/>
+          </Route>
+        </Routes>
+      </BrowserRouter>
     </>
   )
 }
