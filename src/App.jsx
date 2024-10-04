@@ -2,6 +2,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import './index.css'
 import LandingLayout from './layouts/LandingLayout'
 import Products from './pages/Products'
+import Home from './pages/home/Home'
 
 function App() {
 
@@ -9,8 +10,9 @@ function App() {
     <>
       <BrowserRouter>
         <Routes>
-          <Route path='/' element={<LandingLayout />} >
-            <Route index path='products' element={<Products />}/>
+          <Route path='/' element={<LandingLayout />}>
+            <Route index element={<Home />} />
+            <Route path='products' element={<Products />} />
           </Route>
         </Routes>
       </BrowserRouter>
