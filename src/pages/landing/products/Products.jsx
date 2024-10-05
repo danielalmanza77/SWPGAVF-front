@@ -83,7 +83,7 @@ const Products = () => {
 
     return (
         <>
-            <div className='w-[80%] mx-auto py-10 flex gap-x-8'>
+            <div className='w-[90%] mx-auto py-10 flex gap-x-8'>
                 <div className='w-[25%]'>
                     <ProductFilter onFilterChange={handleFilterChange} />
                 </div>

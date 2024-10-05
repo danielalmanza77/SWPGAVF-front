@@ -43,7 +43,7 @@ const ProductCard = ({ product, onAddToCart }) => {
                     <button 
                     onClick={() => onAddToCart(product)} 
                     className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">
-                        Add to Cart
+                        Adñadir al carrito
                     </button>
                 </div>
             </div>
