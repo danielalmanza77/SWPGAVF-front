@@ -36,7 +36,7 @@ const Navbar = () => {
             <div className='ps-4'>
               <Link className='focus:outline-none' to="/">
                 <h1 className='pl-2 text-2xl font-bold text-white-900 tracking-tight leading-tight'>
-                  FENIX LAUPA S.A.C
+                  S.A.C
                 </h1>
               </Link>
             </div>
