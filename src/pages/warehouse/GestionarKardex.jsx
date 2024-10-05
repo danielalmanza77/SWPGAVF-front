@@ -9,7 +9,7 @@ const GestionarKardex = () => {
                     <OptionsSideBar />
                 </div>
                 <div className='w-[75%]'>
-                    Dashboard
+                    Dash
                 </div>
             </div>
         </>
