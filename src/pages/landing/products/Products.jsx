@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import ProductCard from '../components/ProductCard';
-import ProductFilter from '../components/ProductFilter';
+import ProductCard from '../../../components/ProductCard';
+import ProductFilter from '../../../components/ProductFilter';
+import ProductModal from './ProductModal';
 
 const Products = () => {
     const [filters, setFilters] = useState({
@@ -8,23 +9,28 @@ const Products = () => {
         priceRange: 1000,
     });
 
+    const [selectedProduct, setSelectedProduct] = useState(null); // State for selected product
+    const [isModalOpen, setIsModalOpen] = useState(false); // State for modal visibility
+
+
+
     const items = [
         {
             id: 1,
-            name: "Foco LED 9W",
+            name: "iPhone16",
             description: "Foco LED de 9W, luz blanca, eficiente en energía, ideal para interiores.",
             category: "Electronics",
             price: 20.99,
             stock: 150,
             brand: "Philips",
             images: [
-              "/images/foco_led_9w_front.jpg",
-              "/images/foco_led_9w_side.jpg"
+              "/images/ip.jpg",
+              "/images/ip2.jpg"
             ]
         },
         {
             id: 2,
-            name: "Foco LED 9W",
+            name: "Foco 2",
             description: "Foco LED de 9W, luz blanca, eficiente en energía, ideal para interiores.",
             category: "Clothing",
             price: 100,
@@ -37,7 +43,7 @@ const Products = () => {
         },
         {
             id: 3,
-            name: "Foco LED 9W",
+            name: "Foco 3",
             description: "Foco LED de 9W, luz blanca, eficiente en energía, ideal para interiores.",
             category: "Luminarias",
             price: 50,
@@ -63,6 +69,18 @@ const Products = () => {
         }));
     };
 
+
+    const openModal = (product) => {
+        setSelectedProduct(product);
+        setIsModalOpen(true);
+    };
+
+    const closeModal = () => {
+        setSelectedProduct(null);
+        setIsModalOpen(false);
+    };
+
+
     return (
         <>
             <div className='w-[80%] mx-auto py-10 flex gap-x-8'>
@@ -71,10 +89,13 @@ const Products = () => {
                 </div>
                 <div className="grid grid-cols-3 gap-6 w-[75%]">
                     {filteredItems.map((item) => (
-                        <ProductCard key={item.id} product={item} />
+                        <ProductCard key={item.id} product={item} onAddToCart={openModal} />
                     ))}
                 </div>
             </div>
+            {isModalOpen && selectedProduct && (
+                <ProductModal product={selectedProduct} onClose={closeModal} />
+            )}
         </>
     );
 };
