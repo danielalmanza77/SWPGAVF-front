@@ -5,6 +5,7 @@ import Products from './pages/landing/products/Products'
 import Home from './pages/landing/home/Home'
 import GestionarKardex from './pages/warehouse/GestionarKardex'
 import GestionarProductos from './pages/warehouse/gestionarProductos/GestionarProductos'
+import ReporteVentas from './pages/warehouse/gestionarProductos/ReporteVentas'
 
 function App() {
 
@@ -17,7 +18,8 @@ function App() {
             <Route path='products' element={<Products />} />
           </Route>
           {/* <Route path='/warehouse' element={<GestionarKardex />} /> */}
-          <Route path='/warehouse' element={<GestionarProductos />} />
+          {/* <Route path='/warehouse' element={<GestionarProductos />} /> */}
+          <Route path='/warehouse' element={<ReporteVentas />} /> 
         </Routes>
       </BrowserRouter>
     </>
