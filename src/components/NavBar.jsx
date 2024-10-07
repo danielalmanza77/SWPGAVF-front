@@ -62,6 +62,9 @@ const Navbar = () => {
             <Link to={"/products"} className='me-6'>
               Productos
             </Link>
+            <Link to={"/warehouse"} className='me-6'>
+              Kardex
+            </Link>
           </div>
           <div className="flex items-center space-x-8 pr-4">
             <button className="focus:outline-none">
