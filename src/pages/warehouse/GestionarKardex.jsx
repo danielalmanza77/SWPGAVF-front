@@ -9,8 +9,8 @@ const GestionarKardex = () => {
     nombre: "",
     descripcion: "",
     imagen: "",
-    stock: 0,
-    precio: 0,
+    stock: "",
+    precio: "",
   });
   const [indiceEdicion, setIndiceEdicion] = useState(null);
 
@@ -21,7 +21,7 @@ const GestionarKardex = () => {
 
   const agregarProducto = () => {
     setProductos([...productos, nuevoProducto]);
-    setNuevoProducto({ nombre: "", descripcion: "", imagen: "", stock: 0, precio: 0 });
+    setNuevoProducto({ nombre: "", descripcion: "", imagen: "", stock: "", precio: "" });
   };
 
   const eliminarProducto = (indice) => {
@@ -39,7 +39,7 @@ const GestionarKardex = () => {
       indice === indiceEdicion ? nuevoProducto : producto
     );
     setProductos(productosActualizados);
-    setNuevoProducto({ nombre: "", descripcion: "", imagen: "", stock: 0, precio: 0 });
+    setNuevoProducto({ nombre: "", descripcion: "", imagen: "", stock: "", precio: "" });
     setIndiceEdicion(null);
   };
 
@@ -71,7 +71,7 @@ const GestionarKardex = () => {
 
       <div className="mx-4 sm:mx-6 md:mx-12 lg:mx-20 xl:mx-80 mb-6 bg-white p-4 rounded-lg shadow-md flex-grow">
         <h2 className="text-xl font-semibold mb-4">
-          {indiceEdicion !== null ? "Editar Producto Existente" : "Enlistar Nuevo Producto"}
+          {indiceEdicion !== null ? "Editar Nuevo Kardex" : "Nuevo Kardex"}
         </h2>
         <div className="space-y-4"> 
           <input
@@ -79,7 +79,7 @@ const GestionarKardex = () => {
             name="nombre"
             value={nuevoProducto.nombre}
             onChange={manejarCambio}
-            placeholder="Nombre del Producto"
+            placeholder="Id Del Producto"
             className="w-full p-2 border border-gray-300 rounded-md"
           />
           <input
@@ -87,7 +87,7 @@ const GestionarKardex = () => {
             name="descripcion"
             value={nuevoProducto.descripcion}
             onChange={manejarCambio}
-            placeholder="Descripción del Producto"
+            placeholder="Entrada/Salida"
             className="w-full p-2 border border-gray-300 rounded-md"
           />
           <input
@@ -95,7 +95,7 @@ const GestionarKardex = () => {
             name="imagen"
             value={nuevoProducto.imagen}
             onChange={manejarCambio}
-            placeholder="URL de la Imagen"
+            placeholder="Venta/Compra/Devolución"
             className="w-full p-2 border border-gray-300 rounded-md"
           />
           <input
@@ -103,15 +103,15 @@ const GestionarKardex = () => {
             name="stock"
             value={nuevoProducto.stock}
             onChange={manejarCambio}
-            placeholder="Stock"
+            placeholder="Cantidad"
             className="w-full p-2 border border-gray-300 rounded-md"
           />
           <input
-            type="number"
+            type="string"
             name="precio"
             value={nuevoProducto.precio}
             onChange={manejarCambio}
-            placeholder="Precio"
+            placeholder="Fecha"
             className="w-full p-2 border border-gray-300 rounded-md"
           />
         </div>
@@ -183,7 +183,7 @@ const GestionarKardex = () => {
         ))}
       </div>
       <>
-        <div className='mt-5'>  
+        <div className='mt-48'>  
           <Footer />
         </div>
       </>

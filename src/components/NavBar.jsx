@@ -63,7 +63,13 @@ const Navbar = () => {
               Productos
             </Link>
             <Link to={"/warehouse"} className='me-6'>
+              Ventas
+            </Link>
+            <Link to={"/o"} className='me-6'>
               Kardex
+            </Link>
+            <Link to={"/a"} className='me-6'>
+              GesProd
             </Link>
           </div>
           <div className="flex items-center space-x-8 pr-4">
