@@ -3,9 +3,15 @@ import { Link } from 'react-router-dom'
 
 const OptionsSideBar = () => {
     return (
-        <div className="bg-white border border-gray-200 rounded-lg p-4 shadow-md">
-            <h2 className="text-lg font-semibold text-gray-800 mb-4">Admin Panel</h2>
-            <ul className="space-y-2">
+        <div className=" w-[20%] bg-white border border-gray-200 rounded-lg p-4 shadow-md">
+            <div className='ps-4'>
+              <Link className='focus:outline-none' to="/">
+                <h1 className='pl-2 text-2xl font-bold text-white-900 tracking-tight leading-tight'>
+                  FENIX LAUPA S.A.C
+                </h1>
+              </Link>
+            </div>
+            <ul className="my-8 space-y-6">
                 <li>
                     <Link
                         to="/agregar-producto"
@@ -20,6 +26,14 @@ const OptionsSideBar = () => {
                         className="block text-gray-700 hover:text-gray-900"
                     >
                         Operacion 2 de Usuario
+                    </Link>
+                </li>
+                <li>
+                    <Link
+                        to="/gestionar-producto"
+                        className="block text-gray-700 hover:text-gray-900"
+                    >
+                        Operacion 3 de Usuario
                     </Link>
                 </li>
             </ul>

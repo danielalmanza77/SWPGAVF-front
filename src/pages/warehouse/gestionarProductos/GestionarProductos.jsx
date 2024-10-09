@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import ProductTable from './ProductTable';
-import ProductModalTwo from './ProductModalTwo';
 import ProductForm from './ProductForm';
 import ProductView from './ProductView';
 
@@ -114,7 +113,7 @@ const GestionarProductos = () => {
         />
 
         {/* Modal para agregar/editar producto */}
-        <ProductModalTwo
+        <GestionarProductModal
           show={mostrarModal}
           onHide={manejarCerrar}
           title={tipoModal === 'agregar' ? 'Agregar Producto' : 'Actualizar Producto'}
@@ -124,16 +123,16 @@ const GestionarProductos = () => {
             productoEditado={productoEditado}
             actualizarProducto={actualizarProducto}
           />
-        </ProductModalTwo>
+        </GestionarProductModal>
 
         {/* Modal para ver producto */}
-        <ProductModalTwo
+        <GestionarProductModal
           show={mostrarModalVer}
           onHide={manejarCerrar}
           title="Detalles del Producto"
         >
           {productoVisto && <ProductView producto={productoVisto} />}
-        </ProductModalTwo>
+        </GestionarProductModal>
       </div>
     </>
   );

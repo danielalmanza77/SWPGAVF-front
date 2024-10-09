@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ProductModalTwo = ({ show, onHide, title, children }) => {
+const GestionarProductModal = ({ show, onHide, title, children }) => {
   if (!show) return null;
 
   return (
@@ -34,4 +34,4 @@ const ProductModalTwo = ({ show, onHide, title, children }) => {
   );
 };
 
-export default ProductModalTwo;
+export default GestionarProductModal;
