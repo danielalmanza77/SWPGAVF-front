@@ -216,7 +216,12 @@ const GestionarKardex = () => {
                 onChange={manejarCambio}
                 placeholder="Fecha"
                 className="w-full p-2 border border-gray-300 rounded-md"
-                min={obtenerFechaActual()} 
+                min={obtenerFechaActual()}
+                disabled={
+                  !nuevoKardex.entradaSalida || 
+                  !nuevoKardex.tipoOperacion || 
+                  !nuevoKardex.cantidad
+                } 
               />
             </div>
             <div className="mt-4 flex justify-end space-x-2">
@@ -318,4 +323,3 @@ const GestionarKardex = () => {
 
 export default GestionarKardex;
 
-//ESTO ES BAIT//
