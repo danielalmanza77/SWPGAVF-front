@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
 
@@ -25,9 +25,8 @@ const GestionarKardex = () => {
     },
     {
       idProducto: "3",
-      nombre: "NAS 40TB  ",
-      descripcion:
-        "NAS que admite hasta 40tb de almacenamiento",
+      nombre: "NAS 40TB",
+      descripcion: "NAS que admite hasta 40tb de almacenamiento",
       imagen:
         "https://www.metafrase.com/blog/wp-content/uploads/sites/4/2022/02/nas-system-heimanwendung-c.jpeg",
       stock: 8,
@@ -36,8 +35,7 @@ const GestionarKardex = () => {
     {
       idProducto: "4",
       nombre: "Generador 5000W",
-      descripcion:
-        "Generador a base de gasolina para suministrar hasta 5000w de energia",
+      descripcion: "Generador a base de gasolina para suministrar hasta 5000w de energia",
       imagen:
         "https://berklin.com.pe/cdn/shop/files/E5000-1-min.jpg?v=1689799998",
       stock: 3,
@@ -53,61 +51,72 @@ const GestionarKardex = () => {
     fecha: "",
   });
 
-  const [historialKardex, setHistorialKardex] = useState([]); 
-  const [mostrarHistorial, setMostrarHistorial] = useState(false); 
-
+  const [historialKardex, setHistorialKardex] = useState([]);
+  const [mostrarHistorial, setMostrarHistorial] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
 
-  
+  useEffect(() => {
+    const handleBeforeUnload = (e) => {
+      if (modalVisible) {
+        const message = "hola";
+        e.preventDefault();
+        e.returnValue = message; 
+        return message;
+      }
+    };
+
+    window.addEventListener("beforeunload", handleBeforeUnload);
+
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
+  }, [modalVisible]); 
+
   const obtenerFechaActual = () => {
     const hoy = new Date();
     const año = hoy.getFullYear();
-    const mes = String(hoy.getMonth() + 1).padStart(2, "0"); 
+    const mes = String(hoy.getMonth() + 1).padStart(2, "0");
     const dia = String(hoy.getDate()).padStart(2, "0");
     return `${año}-${mes}-${dia}`;
   };
 
   const manejarCambio = (e) => {
     const { name, value } = e.target;
-  
-    
+
     if (name === "cantidad" && (/[e+\-]/.test(value) || value < 0)) {
       alert("La cantidad no puede contener operadores (+, -, e) o ser negativa.");
       return;
     }
-  
-    
+
     if (name === "tipoOperacion" && !nuevoKardex.entradaSalida) {
       alert("Debes seleccionar Entrada/Salida antes de seleccionar el tipo de operación.");
       return;
     }
-  
+
     if (name === "cantidad" && !nuevoKardex.tipoOperacion) {
       alert("Debes seleccionar el tipo de operación antes de ingresar la cantidad.");
       return;
     }
-  
+
     setNuevoKardex({ ...nuevoKardex, [name]: value });
   };
+
   const abrirModalKardex = (idProducto) => {
-    setNuevoKardex({ ...nuevoKardex, idProducto }); 
+    setNuevoKardex({ ...nuevoKardex, idProducto });
     setModalVisible(true);
   };
 
   const agregarKardex = () => {
-    
     if (parseInt(nuevoKardex.cantidad) < 0) {
       alert("La cantidad no puede ser un número negativo");
       return;
     }
 
-    
     if (nuevoKardex.fecha < obtenerFechaActual()) {
       alert("La fecha no puede ser anterior a la fecha del sistema.");
       return;
     }
 
-    
     setProductos(
       productos.map((producto) =>
         producto.idProducto === nuevoKardex.idProducto
@@ -122,10 +131,8 @@ const GestionarKardex = () => {
       )
     );
 
-   
     setHistorialKardex([...historialKardex, nuevoKardex]);
 
-    
     setNuevoKardex({
       idProducto: "",
       entradaSalida: "",
@@ -140,7 +147,7 @@ const GestionarKardex = () => {
     if (nuevoKardex.entradaSalida === "Entrada") {
       return (
         <>
-        <option value="SeleccionTipoDeOperacion">Selecciona Tipo De Operacion</option>
+          <option value="SeleccionTipoDeOperacion">Selecciona Tipo De Operacion</option>
           <option value="Compra">Compra</option>
           <option value="Devolución del cliente por insatisfacción o garantía">
             Devolución del cliente por insatisfacción o garantía
@@ -150,7 +157,7 @@ const GestionarKardex = () => {
     } else if (nuevoKardex.entradaSalida === "Salida") {
       return (
         <>
-        <option value="SeleccionTipoDeOperacion">Selecciona Tipo De Operacion</option>
+          <option value="SeleccionTipoDeOperacion">Selecciona Tipo De Operacion</option>
           <option value="Venta">Venta</option>
           <option value="Devolución al proveedor por error">
             Devolución al proveedor por error
@@ -167,7 +174,6 @@ const GestionarKardex = () => {
         <Navbar />
       </div>
 
-      
       {modalVisible && (
         <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center">
           <div className="bg-white p-6 rounded-lg shadow-md">
@@ -180,7 +186,7 @@ const GestionarKardex = () => {
                 onChange={manejarCambio}
                 placeholder="ID Producto"
                 className="w-full p-2 border border-gray-300 rounded-md"
-                disabled 
+                disabled
               />
               <select
                 name="entradaSalida"
@@ -207,7 +213,7 @@ const GestionarKardex = () => {
                 onChange={manejarCambio}
                 placeholder="Cantidad"
                 className="w-full p-2 border border-gray-300 rounded-md"
-                min="0" 
+                min="0"
               />
               <input
                 type="date"
@@ -218,10 +224,10 @@ const GestionarKardex = () => {
                 className="w-full p-2 border border-gray-300 rounded-md"
                 min={obtenerFechaActual()}
                 disabled={
-                  !nuevoKardex.entradaSalida || 
-                  !nuevoKardex.tipoOperacion || 
+                  !nuevoKardex.entradaSalida ||
+                  !nuevoKardex.tipoOperacion ||
                   !nuevoKardex.cantidad
-                } 
+                }
               />
             </div>
             <div className="mt-4 flex justify-end space-x-2">
@@ -266,7 +272,7 @@ const GestionarKardex = () => {
               className="bg-blue-500 text-white px-4 py-2 rounded-md"
             >
               Nuevo Kardex
-            </button>
+            </button> 
           </div>
         ))}
       </div>
