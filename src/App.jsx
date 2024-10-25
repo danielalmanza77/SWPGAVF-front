@@ -1,11 +1,10 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import './index.css'
 import LandingLayout from './layouts/LandingLayout'
-import Products from './pages/landing/products/Products'
 import Home from './pages/landing/home/Home'
-import GestionarKardex from './pages/warehouse/GestionarKardex'
-import GestionarProductos from './pages/warehouse/gestionarProductos/GestionarProductos'
-import ReporteVentas from './pages/warehouse/gestionarProductos/ReporteVentas'
+import Products from './pages/landing/products/Products'
+import ReporteVentas from './pages/warehouse/ManageProducts/ReporteVentas'
+import ManageProducts from './pages/warehouse/ManageProducts/ManageProducts'
 
 function App() {
 
@@ -18,8 +17,8 @@ function App() {
             <Route path='products' element={<Products />} />
           </Route>
           {/* <Route path='/warehouse' element={<GestionarKardex />} /> */}
-          {/* <Route path='/warehouse' element={<GestionarProductos />} /> */}
-          <Route path='/warehouse' element={<ReporteVentas />} /> 
+          <Route path='/warehouse' element={<ManageProducts />} />
+          {/* <Route path='/warehouse' element={<ReporteVentas />} />  */}
         </Routes>
       </BrowserRouter>
     </>
