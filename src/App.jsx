@@ -22,9 +22,9 @@ function App() {
             <Route path='products' element={<Products />} />
             
           </Route>
-          <Route path='/warehouse' element={<DashboardLayout />}>
-            <Route index element={<ManageProducts />} />
-            {/* <Route path='kardex' element={<GestionarKardex />} /> */}
+          <Route path='/' element={<DashboardLayout />}>
+            <Route path='manage' element={<ManageProducts />} />
+            <Route path='kardex' element={<GestionarKardex />} />
           </Route>
           {/* <Route path='/warehouse' element={<GestionarKardex />} /> */}
           {/* <Route path='/warehouse' element={<ManageProducts />} /> */}
