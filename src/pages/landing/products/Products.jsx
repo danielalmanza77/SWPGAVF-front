@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 import ProductCard from '../../../components/ProductCard';
 import ProductFilter from '../../../components/ProductFilter';
 import ProductModal from './ProductModal';
@@ -9,56 +10,39 @@ const Products = () => {
         priceRange: 1000,
     });
 
-    const [selectedProduct, setSelectedProduct] = useState(null); // State for selected product
-    const [isModalOpen, setIsModalOpen] = useState(false); // State for modal visibility
+    // State for selected product
+    const [selectedProduct, setSelectedProduct] = useState(null);
+    
+    // State for modal visibility
+    const [isModalOpen, setIsModalOpen] = useState(false); 
+    
+    // State for products and loading state
+    const [items, setItems] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
+    // Fetch products from API
+    useEffect(() => {
+        const fetchProducts = async () => {
+            try {
+                const response = await axios.get("http://localhost:8080/products"); // Replace with your API endpoint
+                console.log(response.data);
+                setItems(response.data); // Assuming your API returns an array of products
+            } catch (err) {
+                setError('Failed to fetch products');
+                console.error(err);
+            } finally {
+                setLoading(false);
+            }
+        };
 
+        fetchProducts();
+    }, []);
 
-    const items = [
-        {
-            id: 1,
-            name: "iPhone16",
-            description: "Foco LED de 9W, luz blanca, eficiente en energía, ideal para interiores.",
-            category: "Electronics",
-            price: 20.99,
-            stock: 150,
-            brand: "Philips",
-            images: [
-              "/images/ip.jpg",
-              "/images/ip2.jpg"
-            ]
-        },
-        {
-            id: 2,
-            name: "Foco 2",
-            description: "Foco LED de 9W, luz blanca, eficiente en energía, ideal para interiores.",
-            category: "Clothing",
-            price: 100,
-            stock: 150,
-            brand: "Philips",
-            images: [
-              "/images/foco_led_9w_front.jpg",
-              "/images/foco_led_9w_side.jpg"
-            ]
-        },
-        {
-            id: 3,
-            name: "Foco 3",
-            description: "Foco LED de 9W, luz blanca, eficiente en energía, ideal para interiores.",
-            category: "Luminarias",
-            price: 50,
-            stock: 150,
-            brand: "Philips",
-            images: [
-              "/images/foco_led_9w_front.jpg",
-              "/images/foco_led_9w_side.jpg"
-            ]
-        }
-    ];
-
+    // Filter items based on selected filters
     const filteredItems = items.filter(item => {
-        const withinPriceRange = item.price <= filters.priceRange;
-        const categoryMatch = filters.category === 'All' || item.category === filters.category;
+        const withinPriceRange = item.precio <= filters.priceRange;
+        const categoryMatch = filters.category === 'All' || item.categoria === filters.category;
         return withinPriceRange && categoryMatch;
     });
 
@@ -69,7 +53,7 @@ const Products = () => {
         }));
     };
 
-
+    // Modal functions
     const openModal = (product) => {
         setSelectedProduct(product);
         setIsModalOpen(true);
@@ -80,6 +64,8 @@ const Products = () => {
         setIsModalOpen(false);
     };
 
+    if (loading) return <div>Loading...</div>;
+    if (error) return <div>{error}</div>;
 
     return (
         <>
@@ -89,7 +75,21 @@ const Products = () => {
                 </div>
                 <div className="grid grid-cols-3 gap-6 w-[75%]">
                     {filteredItems.map((item) => (
-                        <ProductCard key={item.id} product={item} onAddToCart={openModal} />
+                        <ProductCard 
+                            key={item.productoId} // Use productoId as key
+                            product={{
+                                id: item.productoId,
+                                sku: item.sku,
+                                nombre: item.nombre,
+                                categoria: item.categoria,
+                                descripcion: item.descripcion,
+                                marca: item.marca,
+                                precio: item.precio,
+                                stock: item.stock,
+                                imagenes: item.imagenes
+                            }} 
+                            onAddToCart={openModal} 
+                        />
                     ))}
                 </div>
             </div>

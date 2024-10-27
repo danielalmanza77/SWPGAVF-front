@@ -44,7 +44,7 @@ const Home = () => {
             
             {/* carousel */}
             <div className='mb-16'> {/* Add a margin bottom here */}
-                <h1 className='mb-8 text-2xl text-center'> PRODUCTOS DESTACOS DEL MES </h1>
+                <h1 className='mb-8 text-2xl text-center'> PRODUCTOS DESTACADOS DEL MES </h1>
                 <Swiper
                     slidesPerView={3}
                     spaceBetween={30}
