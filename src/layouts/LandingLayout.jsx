@@ -7,7 +7,9 @@ const LandingLayout = () => {
   return (
     <>
       <Navbar />
-      <Outlet />
+      <div className='w-[90%] m-auto py-10'>
+        <Outlet />
+      </div>
       <Footer />
     </>
   )
