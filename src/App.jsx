@@ -6,6 +6,9 @@ import Products from './pages/landing/products/Products'
 import ManageProducts from './pages/warehouse/ManageProducts/ManageProducts'
 import DashboardLayout from './layouts/DashboardLayout'
 import GestionarKardex from './pages/warehouse/GestionarKardex'
+import Login from './pages/auth/Login'
+import AuthLayout from './layouts/AuthLayout'
+import Register from './pages/auth/Register'
 
 function App() {
 
@@ -13,10 +16,10 @@ function App() {
     <>
       <BrowserRouter>
         <Routes>
-          {/* <Route path='/' element={<AuthLayout />}>
-            <Route index path='login' element={<Login />} />
+          <Route path='/' element={<AuthLayout />}>
+            <Route path='login' element={<Login />} />
             <Route path='register' element={<Register />} />
-          </Route> */}
+          </Route>
           <Route path='/' element={<LandingLayout />}>
             <Route index element={<Home />} />
             <Route path='products' element={<Products />} />
