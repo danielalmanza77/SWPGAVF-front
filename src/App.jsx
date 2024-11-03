@@ -7,6 +7,7 @@ import ManageProducts from './pages/warehouse/ManageProducts/ManageProducts'
 import DashboardLayout from './layouts/DashboardLayout'
 import GestionarKardex from './pages/warehouse/GestionarKardex'
 import ReporteVentas from './pages/warehouse/ManageProducts/ReporteVentas'
+import ManageSuppliers from './pages/warehouse/ManageProducts/ManageSuppliers'
 
 function App() {
 
@@ -27,6 +28,7 @@ function App() {
             <Route path='manage' element={<ManageProducts />} />
             <Route path='kardex' element={<GestionarKardex />} />
             <Route path='reports' element={<ReporteVentas />} />
+            <Route path='suppliers' element={<ManageSuppliers />} />
           </Route>
           {/* <Route path='/warehouse' element={<GestionarKardex />} /> */}
           {/* <Route path='/warehouse' element={<ManageProducts />} /> */}
