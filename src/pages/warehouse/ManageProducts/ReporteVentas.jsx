@@ -187,7 +187,7 @@ const ReporteVentas = () => {
                             } else if (fecha) {
                                 setFechaInicio(fecha); // Mantener la fecha seleccionada como fecha de inicio
                             }
-                            setFecha(null); // Reiniciar fecha seleccionada
+                            setFecha(null); 
                         }}
                         className={`relative inline-flex items-center h-5 rounded-full w-10 transition-colors duration-200 focus:outline-none ${habilitarRango ? 'bg-blue-600' : 'bg-gray-400'}`}
                     >

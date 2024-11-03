@@ -38,65 +38,155 @@ function ManageProducts() {
   const [isModalOpen, setModalOpen] = useState(false);
   const [modalMode, setModalMode] = useState('');
   const [selectedProduct, setSelectedProduct] = useState(null);
-  const [formData, setFormData] = useState({ nombre: '', descripcion: '', precio: '' });
+  const [formData, setFormData] = useState({ 
+    sku: '', 
+    nombre: '', 
+    descripcion: '', 
+    categoria: '', 
+    stock: '', 
+    precio: '', 
+    marca: '' 
+  });
+  const [notification, setNotification] = useState({ show: false, message: '', type: '' });
+  const [validationErrors, setValidationErrors] = useState({});
 
-  // Function to open the modal in create mode
+  const showNotification = (message, type = 'error') => {
+    setNotification({ show: true, message, type });
+    setTimeout(() => {
+      setNotification({ show: false, message: '', type: '' });
+    }, 10000);
+  };
+
   const handleCreate = () => {
     setModalMode('create');
-    setFormData({ nombre: '', descripcion: '', precio: '' });
+    setFormData({ 
+      sku: '', 
+      nombre: '', 
+      descripcion: '', 
+      categoria: '', 
+      stock: '', 
+      precio: '', 
+      marca: '' 
+    });
+    setValidationErrors({});
     setModalOpen(true);
   };
 
-  // Function to handle viewing a product
   const handleView = (id) => {
     const product = productos.find(prod => prod.productoId === id);
     setSelectedProduct(product);
     setFormData(product);
     setModalMode('view');
+    setValidationErrors({});
     setModalOpen(true);
   };
 
-  // Function to handle editing a product
   const handleEdit = (id) => {
     const product = productos.find(prod => prod.productoId === id);
     setSelectedProduct(product);
     setFormData(product);
     setModalMode('edit');
+    setValidationErrors({});
     setModalOpen(true);
   };
 
-  // Function to handle deleting a product
   const handleDelete = (id) => {
-    setProductos(productos.filter((producto) => producto.productoId !== id));
+    const product = productos.find(prod => prod.productoId === id);
+    setSelectedProduct(product);
+    setModalMode('delete');
+    setModalOpen(true);
   };
 
-  // Function to close the modal
+  const confirmDelete = () => {
+    setProductos(productos.filter((producto) => producto.productoId !== selectedProduct.productoId));
+    showNotification('Producto eliminado correctamente', 'success');
+    handleClose();
+  };
+
   const handleClose = () => {
     setModalOpen(false);
+    setValidationErrors({});
   };
 
-  // Function to handle form submission
+  const validateForm = () => {
+    const errors = {};
+    const requiredFields = ['sku', 'nombre', 'descripcion', 'categoria', 'stock', 'precio', 'marca'];
+    
+    requiredFields.forEach(field => {
+      if (!formData[field]) {
+        errors[field] = true;
+      }
+    });
+
+    setValidationErrors(errors);
+    
+    if (Object.keys(errors).length > 0) {
+      showNotification('Por favor, rellene todos los campos requeridos');
+      return false;
+    }
+    return true;
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
+    
+    if (!validateForm()) {
+      return;
+    }
+
+    const nextId = Math.max(...productos.map(p => p.productoId), 0) + 1;
+
     if (modalMode === 'create') {
-      const newProduct = { ...formData, productoId: Date.now() }; // Example of generating a new ID
+      const newProduct = { 
+        ...formData, 
+        productoId: nextId,
+        precio: parseFloat(formData.precio),
+        stock: parseInt(formData.stock)
+      };
       setProductos([...productos, newProduct]);
+      showNotification('Producto creado correctamente', 'success');
     } else if (modalMode === 'edit') {
-      setProductos(productos.map((producto) => (producto.productoId === selectedProduct.productoId ? { ...producto, ...formData } : producto)));
+      setProductos(productos.map((producto) => 
+        producto.productoId === selectedProduct.productoId 
+          ? { 
+              ...producto, 
+              ...formData,
+              precio: parseFloat(formData.precio),
+              stock: parseInt(formData.stock)
+            } 
+          : producto
+      ));
+      showNotification('Producto actualizado correctamente', 'success');
     }
     handleClose();
   };
 
-  // Function to handle changes in the form
   const handleFormChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
+    // Limpiar error de validación cuando el usuario empieza a escribir
+    if (validationErrors[name]) {
+      setValidationErrors(prev => ({ ...prev, [name]: false }));
+    }
   };
 
   return (
     <>
+      {notification.show && (
+        <div 
+          className={`fixed top-4 right-4 p-4 rounded shadow-lg z-50 ${
+            notification.type === 'success' ? 'bg-green-500' : 'bg-red-500'
+          } text-white`}
+        >
+          {notification.message}
+        </div>
+      )}
+      
       <div className="ml-40 mt-6">
-        <button className="bg-sky-600 hover:bg-sky-700 text-white font-semibold py-2 px-4 rounded mb-4 transition duration-300" onClick={handleCreate}>
+        <button 
+          className="bg-sky-600 hover:bg-sky-700 text-white font-semibold py-2 px-4 rounded mb-4 transition duration-300" 
+          onClick={handleCreate}
+        >
           Add
         </button>
         <table className="table-fixed border border-gray-300 shadow-lg rounded-lg w-[80%] bg-white">
@@ -120,7 +210,7 @@ function ManageProducts() {
                 <td className="p-4 text-center">{producto.nombre}</td>
                 <td className="p-4 text-center">{producto.categoria}</td>
                 <td className="p-4 text-center">{producto.stock}</td>
-                <td className="p-4 text-center">${typeof producto.precio === 'number' ? producto.precio.toFixed(2) : 'N/A'}</td>
+                <td className="p-4 text-center">${producto.precio.toFixed(2)}</td>
                 <td className="p-4 text-center">{producto.marca}</td>
                 <td className="p-4 flex justify-around">
                   <button className="p-2 bg-sky-400 hover:bg-sky-500 text-white font-semibold rounded transition duration-300" onClick={() => handleView(producto.productoId)}>
@@ -142,9 +232,12 @@ function ManageProducts() {
           <ManageProductsModal
             mode={modalMode}
             formData={formData}
+            selectedProduct={selectedProduct}
             onClose={handleClose}
             onSubmit={handleSubmit}
             onFormChange={handleFormChange}
+            onConfirmDelete={confirmDelete}
+            validationErrors={validationErrors}
           />
         )}
       </div>
