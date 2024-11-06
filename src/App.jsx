@@ -9,6 +9,12 @@ import GestionarKardex from './pages/warehouse/GestionarKardex'
 import Login from './pages/auth/Login'
 import AuthLayout from './layouts/AuthLayout'
 import Register from './pages/auth/Register'
+import DashboardHome from './pages/dashboard/DashboardHome'
+import ManageUsers from './pages/dashboard/ManageUsers/ManageUsers'
+import ManageCatalog from './pages/dashboard/ManageCatalog/ManageCatalog'
+import Cart from './pages/landing/Cart'
+import { CartProvider } from './context/CartContext'
+import Orders from './pages/landing/Orders'
 
 function App() {
 
