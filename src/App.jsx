@@ -1,13 +1,14 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import './index.css'
 import LandingLayout from './layouts/LandingLayout'
-import Products from './pages/landing/products/Products'
 import Home from './pages/landing/home/Home'
-
-import ReporteVentas from './pages/warehouse/gestionarProductos/ReporteVentas'
+import Products from './pages/landing/products/Products'
+import ManageProducts from './pages/warehouse/ManageProducts/ManageProducts'
+import DashboardLayout from './layouts/DashboardLayout'
 import GestionarKardex from './pages/warehouse/GestionarKardex'
-import GestionarProductos from './pages/warehouse/gestionarProductos/GestionarProductos'
-
+import ReporteVentas from './pages/warehouse/ManageProducts/ReporteVentas'
+import ManageSuppliers from './pages/warehouse/ManageProducts/ManageSuppliers'
+import ManageClients from './pages/warehouse/gestionarClientes/GestionarClientes'
 
 function App() {
 
@@ -15,15 +16,26 @@ function App() {
     <>
       <BrowserRouter>
         <Routes>
+          {/* <Route path='/' element={<AuthLayout />}>
+            <Route index path='login' element={<Login />} />
+            <Route path='register' element={<Register />} />
+          </Route> */}
           <Route path='/' element={<LandingLayout />}>
-          
             <Route index element={<Home />} />
             <Route path='products' element={<Products />} />
+            
           </Route>
-          <Route path='/warehouse' element={<ReporteVentas />} />
-          <Route path='/o' element={<GestionarKardex />} />
-          <Route path='/a' element={<GestionarProductos />} />
-          </Routes>
+            <Route path='/' element={<DashboardLayout />}>
+            <Route path='manage' element={<ManageProducts />} />
+            <Route path='kardex' element={<GestionarKardex />} />
+            <Route path='reports' element={<ReporteVentas />} />
+            <Route path='suppliers' element={<ManageSuppliers />} />
+            <Route path='clientes' element={<ManageClients />} />
+          </Route>
+          {/* <Route path='/warehouse' element={<GestionarKardex />} /> */}
+          {/* <Route path='/warehouse' element={<ManageProducts />} /> */}
+          {/* <Route path='/warehouse' element={<ReporteVentas />} />  */}
+        </Routes>
       </BrowserRouter>
     </>
   )

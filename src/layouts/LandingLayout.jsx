@@ -1,13 +1,15 @@
 
 import { Outlet } from 'react-router-dom'
-import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
+import Navbar from '../components/Navbar'
 
 const LandingLayout = () => {
   return (
     <>
       <Navbar />
-      <Outlet />
+      <div className='w-[90%] m-auto py-10'>
+        <Outlet />
+      </div>
       <Footer />
     </>
   )
