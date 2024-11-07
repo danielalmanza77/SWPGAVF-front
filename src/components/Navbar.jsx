@@ -51,13 +51,13 @@ const Navbar = () => {
 
           {/* Removed the extra margin (me-6) from 'Productos' */}
           <div className="flex items-center space-x-8 pr-4">
-            <Link to={"/products"} className="focus:outline-none">
+            <Link to="/landing/products" className="focus:outline-none">
               Productos
             </Link>
-            <Link to="/orders" className="focus:outline-none">
+            <Link to="/landing/orders" className="focus:outline-none">
               Orders
             </Link>
-            <Link to="/cart" className="focus:outline-none">
+            <Link to="/landing/cart" className="focus:outline-none">
               <FaShoppingCart className="text-white text-2xl" />
             </Link>
             <Link to="/login" className="focus:outline-none">

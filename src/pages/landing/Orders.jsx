@@ -79,7 +79,7 @@ const Orders = () => {
                   <p className="text-sm text-gray-600">Date: {order.orderDate}</p>
                   <p className="text-sm text-gray-600">Status: {order.status}</p>
                   <p className="text-sm text-gray-600">
-                    Amount: S/ {order.amount !== undefined ? order.amount.toFixed(2) : '0.00'}
+                    Amount: S/ {order.amount !== undefined ? (order.amount / 100).toFixed(2) : '0.00'}
                   </p>
                 </div>
                 <div>

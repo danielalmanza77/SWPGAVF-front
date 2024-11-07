@@ -12,6 +12,11 @@ import ManageCatalog from './pages/dashboard/ManageCatalog/ManageCatalog'
 import Cart from './pages/landing/Cart'
 import { CartProvider } from './context/CartContext'
 import Orders from './pages/landing/Orders'
+import Login from './pages/auth/Login'
+import AuthLayout from './layouts/AuthLayout'
+import Register from './pages/auth/Register'
+import ReporteVentas from './pages/warehouse/ManageProducts/ReporteVentas'
+
 
 function App() {
 
@@ -20,15 +25,15 @@ function App() {
       <CartProvider>
         <BrowserRouter>
           <Routes>
-            {/* <Route path='/' element={<AuthLayout />}>
-            <Route index path='login' element={<Login />} />
-            <Route path='register' element={<Register />} />
-          </Route> */}
-            <Route path='/' element={<LandingLayout />}>
+            <Route path='/' element={<AuthLayout />}>
+              <Route index path='login' element={<Login />} />
+              <Route path='register' element={<Register />} />
+            </Route>
+            <Route path='/landing' element={<LandingLayout />}>
               <Route index element={<Home />} />
               <Route path='products' element={<Products />} />
-              <Route path="/cart" element={<Cart />} />
-              <Route path="/orders" element={<Orders />} />
+              <Route path="cart" element={<Cart />} />
+              <Route path="orders" element={<Orders />} />
             </Route>
             <Route path='/dashboard' element={<DashboardLayout />}>
               <Route index element={<DashboardHome />} />
@@ -36,10 +41,8 @@ function App() {
               <Route path='catalog' element={<ManageCatalog />} />
               <Route path='users' element={<ManageUsers />} />
               <Route path='kardex' element={<GestionarKardex />} />
+              <Route path='reporte-ventas' element={<ReporteVentas />} /> 
             </Route>
-            {/* <Route path='/warehouse' element={<GestionarKardex />} /> */}
-            {/* <Route path='/warehouse' element={<ManageProducts />} /> */}
-            {/* <Route path='/warehouse' element={<ReporteVentas />} />  */}
           </Routes>
         </BrowserRouter>
       </CartProvider>
