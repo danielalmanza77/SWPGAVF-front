@@ -5,7 +5,7 @@ import Home from './pages/landing/home/Home'
 import Products from './pages/landing/products/Products'
 import ManageProducts from './pages/dashboard/ManageProducts/ManageProducts'
 import DashboardLayout from './layouts/DashboardLayout'
-import GestionarKardex from './pages/warehouse/GestionarKardex'
+import GestionarKardex from './pages/warehouse/GestionarKardex.jsx'
 import DashboardHome from './pages/dashboard/DashboardHome'
 import ManageUsers from './pages/dashboard/ManageUsers/ManageUsers'
 import ManageCatalog from './pages/dashboard/ManageCatalog/ManageCatalog'
@@ -36,6 +36,7 @@ function App() {
               <Route path='catalog' element={<ManageCatalog />} />
               <Route path='users' element={<ManageUsers />} />
               <Route path='kardex' element={<GestionarKardex />} />
+              <Route path='ManageUsers' element={<ManageUsers />} />
             </Route>
             {/* <Route path='/warehouse' element={<GestionarKardex />} /> */}
             {/* <Route path='/warehouse' element={<ManageProducts />} /> */}
