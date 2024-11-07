@@ -1,14 +1,22 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
-const ProductModal = ({ product, onClose }) => {
-    const [currentImage, setCurrentImage] = useState(product.imagenes[0]);
+const ProductModal = ({ product, onClose, onAddToCart }) => {
+    const [currentImage, setCurrentImage] = useState('');
     const [isImageVisible, setIsImageVisible] = useState(true);
     const [quantity, setQuantity] = useState(1); // State for quantity
+
+    useEffect(() => {
+        if (product && product.imageUrls && product.imageUrls.length > 0) {
+            setCurrentImage(product.imageUrls[0]); // Use imageUrls instead of imagenes
+        }
+    }, [product]);
 
     const handleMouseEnter = () => {
         setIsImageVisible(false);
         setTimeout(() => {
-            setCurrentImage(product.imagenes[1]);
+            if (product && product.imageUrls && product.imageUrls.length > 1) {
+                setCurrentImage(product.imageUrls[1]);
+            }
             setIsImageVisible(true);
         }, 200);
     };
@@ -16,50 +24,61 @@ const ProductModal = ({ product, onClose }) => {
     const handleMouseLeave = () => {
         setIsImageVisible(false);
         setTimeout(() => {
-            setCurrentImage(product.imagenes[0]);
+            if (product && product.imageUrls && product.imageUrls.length > 0) {
+                setCurrentImage(product.imageUrls[0]);
+            }
             setIsImageVisible(true);
         }, 200);
     };
 
     const incrementQuantity = () => {
-        setQuantity(prevQuantity => prevQuantity + 1);
-    };
+        setQuantity(prevQuantity => {
+          const newQuantity = prevQuantity + 1;
+          console.log("Incremented Quantity:", newQuantity);
+          return newQuantity;
+        });
+      };
 
-    const decrementQuantity = () => {
-        setQuantity(prevQuantity => Math.max(1, prevQuantity - 1)); // Prevent going below 1
-    };
+   
+const decrementQuantity = () => {
+    setQuantity(prevQuantity => {
+      const newQuantity = Math.max(1, prevQuantity - 1);
+      console.log("Decremented Quantity:", newQuantity);
+      return newQuantity;
+    });
+  };
+
+    const price = product && product.price ? product.price : 0;
+
+    const handleAddToCart = () => {
+        console.log("Adding product to cart:", product, "Quantity:", quantity);
+        onAddToCart(product, quantity); // Add the product to the cart
+      };
 
     return (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
             <div className="bg-white w-1/2 h-1/2 rounded-lg p-4 flex">
                 <img
                     className={`w-1/2 h-full object-cover transition-opacity duration-300 ${!isImageVisible ? 'opacity-0' : 'opacity-100'}`}
-                    src={currentImage}
-                    alt={product.nombre}
+                    src={currentImage || 'default-image.jpg'}
+                    alt={product && product.name ? product.name : 'Product Image'}
                     onMouseEnter={handleMouseEnter}
                     onMouseLeave={handleMouseLeave}
                 />
                 <div className="flex flex-col justify-between p-4">
-                    <div>
-                        <h2 className="text-lg font-semibold">{product.nombre}</h2>
-                        <p>{product.descripcion}</p>
-                        <p className="font-bold">S/ {product.precio.toFixed(2)}</p>
-                        <p className="text-gray-500">{product.categoria}</p>
-                    </div>
+                    <h2 className="text-lg font-semibold">{product && product.name ? product.name : 'Product Name'}</h2>
+                    <p>{product && product.description ? product.description : 'No description available.'}</p>
+                    <p className="font-bold">S/ {price.toFixed(2)}</p>
+                    <p className="text-gray-500">{product && product.category ? product.category : 'No category'}</p>
+
                     <div className="flex items-center mt-4">
                         <button onClick={decrementQuantity} className="bg-gray-300 text-gray-600 px-2 py-1 rounded-md">-</button>
                         <span className="mx-4 text-lg">{quantity}</span>
                         <button onClick={incrementQuantity} className="bg-gray-300 text-gray-600 px-2 py-1 rounded-md">+</button>
                     </div>
-                    <div className="flex justify-between items-center mt-4">
-                        <button 
-                            onClick={onClose} 
-                            className="bg-gray-300 text-gray-600 px-4 py-2 rounded-md">
-                            Cerrar
-                        </button>
-                        <button className="bg-blue-500 text-white px-4 py-2 rounded-md">
-                            Añadir al carrito
-                        </button>
+                    <div className="flex gap-4 mt-4">
+                        <button onClick={handleAddToCart} className="bg-blue-500 text-white px-6 py-2 rounded-md w-full">Añadir al carrito</button>
+                        <button onClick={onClose} className="bg-red-500 text-white px-6 py-2 rounded-md w-full">Cerrar</button>
                     </div>
                 </div>
             </div>

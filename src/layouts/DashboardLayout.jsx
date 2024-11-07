@@ -1,21 +1,16 @@
 import React from 'react'
 import { Outlet } from 'react-router-dom'
-import NavbarDashboard from '../components/dashboard/NavbarDashboard'
-import OptionsSideBar from '../components/dashboard/OptionsSidebar'
-import Footer from '../components/Footer'
+import SidebarDashboard from '../components/dashboard/SIdebarDashboard'
 
 const DashboardLayout = () => {
+
     return (
-        <div className='w-full flex h-screen'>
-            <OptionsSideBar />
-            <div className='w-[80%]'>
-                <NavbarDashboard />
-                <div className='p-6 overflow-auto'>
+            <div className='flex mb-12'>
+                <SidebarDashboard />
+                <div className='w-[90%] bg-slate-100 px-4 py-6'>
                     <Outlet />
                 </div>
-                <Footer />
             </div>
-        </div>
     )
 }
 

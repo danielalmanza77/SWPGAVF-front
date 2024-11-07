@@ -8,6 +8,7 @@ const AuthLayout = () => {
         <>
             <Navbar />
             <Outlet />
+            <Footer />
         </>
     )
 }

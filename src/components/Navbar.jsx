@@ -54,9 +54,12 @@ const Navbar = () => {
             <Link to={"/products"} className="focus:outline-none">
               Productos
             </Link>
-            <button className="focus:outline-none">
+            <Link to="/orders" className="focus:outline-none">
+              Orders
+            </Link>
+            <Link to="/cart" className="focus:outline-none">
               <FaShoppingCart className="text-white text-2xl" />
-            </button>
+            </Link>
             <Link to="/login" className="focus:outline-none">
               <FaUser className="text-white text-2xl" />
             </Link>

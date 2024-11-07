@@ -3,12 +3,9 @@ import './index.css'
 import LandingLayout from './layouts/LandingLayout'
 import Home from './pages/landing/home/Home'
 import Products from './pages/landing/products/Products'
-import ManageProducts from './pages/warehouse/ManageProducts/ManageProducts'
+import ManageProducts from './pages/dashboard/ManageProducts/ManageProducts'
 import DashboardLayout from './layouts/DashboardLayout'
 import GestionarKardex from './pages/warehouse/GestionarKardex'
-import Login from './pages/auth/Login'
-import AuthLayout from './layouts/AuthLayout'
-import Register from './pages/auth/Register'
 import DashboardHome from './pages/dashboard/DashboardHome'
 import ManageUsers from './pages/dashboard/ManageUsers/ManageUsers'
 import ManageCatalog from './pages/dashboard/ManageCatalog/ManageCatalog'
@@ -20,26 +17,33 @@ function App() {
 
   return (
     <>
-      <BrowserRouter>
-        <Routes>
-          <Route path='/' element={<AuthLayout />}>
-            <Route path='login' element={<Login />} />
+      <CartProvider>
+        <BrowserRouter>
+          <Routes>
+            {/* <Route path='/' element={<AuthLayout />}>
+            <Route index path='login' element={<Login />} />
             <Route path='register' element={<Register />} />
-          </Route>
-          <Route path='/' element={<LandingLayout />}>
-            <Route index element={<Home />} />
-            <Route path='products' element={<Products />} />
-            
-          </Route>
-          <Route path='/' element={<DashboardLayout />}>
-            <Route path='manage' element={<ManageProducts />} />
-            <Route path='kardex' element={<GestionarKardex />} />
-          </Route>
-          {/* <Route path='/warehouse' element={<GestionarKardex />} /> */}
-          {/* <Route path='/warehouse' element={<ManageProducts />} /> */}
-          {/* <Route path='/warehouse' element={<ReporteVentas />} />  */}
-        </Routes>
-      </BrowserRouter>
+          </Route> */}
+            <Route path='/' element={<LandingLayout />}>
+              <Route index element={<Home />} />
+              <Route path='products' element={<Products />} />
+              <Route path="/cart" element={<Cart />} />
+              <Route path="/orders" element={<Orders />} />
+            </Route>
+            <Route path='/dashboard' element={<DashboardLayout />}>
+              <Route index element={<DashboardHome />} />
+              <Route path='products' element={<ManageProducts />} />
+              <Route path='catalog' element={<ManageCatalog />} />
+              <Route path='users' element={<ManageUsers />} />
+              <Route path='kardex' element={<GestionarKardex />} />
+            </Route>
+            {/* <Route path='/warehouse' element={<GestionarKardex />} /> */}
+            {/* <Route path='/warehouse' element={<ManageProducts />} /> */}
+            {/* <Route path='/warehouse' element={<ReporteVentas />} />  */}
+          </Routes>
+        </BrowserRouter>
+      </CartProvider>
+
     </>
   )
 }
