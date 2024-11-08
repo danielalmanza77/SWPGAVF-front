@@ -34,7 +34,7 @@ const Navbar = () => {
         <nav className='p-4 flex items-center justify-between'>
           <div className='flex items-center space-x-4'>
             <div className='ps-4'>
-              <Link className='focus:outline-none' to="/">
+              <Link className='focus:outline-none' to="/landing">
                 <h1 className='pl-2 text-2xl font-bold text-white-900 tracking-tight leading-tight'>
                   FENIX LAUPA S.A.C
                 </h1>
@@ -55,7 +55,7 @@ const Navbar = () => {
               Productos
             </Link>
             <Link to="/landing/orders" className="focus:outline-none">
-              Orders
+              Pedidos
             </Link>
             <Link to="/landing/cart" className="focus:outline-none">
               <FaShoppingCart className="text-white text-2xl" />

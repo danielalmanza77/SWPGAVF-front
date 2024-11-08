@@ -21,25 +21,31 @@ const ProductFilter = ({onFilterChange}) => {
     return (
         <div className="bg-white border border-gray-200 rounded-lg p-4 shadow-md">
             <h2 className="text-lg font-semibold text-gray-800 mb-4">
-                Filters
+                Filtros
             </h2>
             <div className="mb-4">
-                <label className="block text-gray-600">Category</label>
+                <label className="block text-gray-600">Categorias</label>
                 <select
                     value={category}
                     onChange={handleCategoryChange}
                     className="mt-1 block w-full border border-gray-300 rounded-md p-2"
                 >
-                    <option value="All">All</option>
-                    <option value="Electronics">Electronics</option>
-                    <option value="Furniture">Furniture</option>
-                    <option value="Clothing">Clothing</option>
-                    <option value="Luminarias">Luminarias</option>
+                    <option value="All">Todos</option>
+                    <option value="Focos LED">Focos LED</option>
+                    <option value="Focos fluorescentes">Focos fluorescentes</option>
+                    <option value="Bombillas inteligentes">Bombillas inteligentes</option>
+                    <option value="Bombillas decorativas">Bombillas decorativas</option>
+                    <option value="Paneles solares">Paneles solares</option>
+                    <option value="UPSs">UPSs</option>
+                    <option value="Termostatos inteligentes">Termostatos inteligentes</option>
+                    <option value="Medidores de consumo eléctrico">Medidores de consumo eléctrico</option>
+                    <option value="Luces de exteriores">Luces de exteriores</option>
+                    <option value="Luces de emergencia">Luces de emergencia</option>
                     {/* Añade más categorías según sea necesario */}
                 </select>
             </div>
             <div>
-                <label className="block text-gray-600">Price Range</label>
+                <label className="block text-gray-600">Rango de precio</label>
                 <input
                     type="range"
                     min="0"
@@ -49,7 +55,7 @@ const ProductFilter = ({onFilterChange}) => {
                     onChange={handlePriceChange}
                     className="mt-1 w-full"
                 />
-                <span className="text-gray-600 mt-1">Up to ${priceRange}</span>
+                <span className="text-gray-600 mt-1">S/ {priceRange}</span>
             </div>
         </div>
     );

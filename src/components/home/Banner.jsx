@@ -18,12 +18,23 @@ const Banner = () => {
                 modules={[Autoplay, Pagination]}
                 className="mySwiper"
             >
-                <SwiperSlide className='bg-indigo-500 p-24'>Slide 1</SwiperSlide>
-                <SwiperSlide className='bg-indigo-500 p-24'>Slide 2</SwiperSlide>
-                <SwiperSlide className='bg-indigo-500 p-24'>Slide 3</SwiperSlide>
+                {/* Slide 1 */}
+                <SwiperSlide className='relative'>
+                    <img src='/images/b1.jpg' alt='Banner 1' className="w-full h-full object-cover rounded-lg" />
+                </SwiperSlide>
+
+                {/* Slide 2 */}
+                <SwiperSlide className='relative'>
+                    <img src='/images/b2.jpg' alt='Banner 2' className="w-full h-full object-cover rounded-lg" />
+                </SwiperSlide>
+
+                {/* Slide 3 */}
+                <SwiperSlide className='relative'>
+                    <img src='/images/b1.jpg' alt='Banner 3' className="w-full h-full object-cover rounded-lg" />
+                </SwiperSlide>
             </Swiper>
         </section>
-    )
-}
+    );
+};
 
 export default Banner;

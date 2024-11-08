@@ -205,8 +205,8 @@ function ManageCatalog() {
         {/* Error message */}
         {error && <div className="text-red-600">{error}</div>}
 
-        <button onClick={handleCreate} className="bg-sky-600 text-white py-2 px-4 rounded">
-          Add Product
+        <button onClick={handleCreate} className="bg-sky-600 text-white py-2 px-4 rounded mb-4">
+          Añadir Producto
         </button>
 
         <table className="border border-gray-300 shadow-lg rounded-lg w-full bg-white">

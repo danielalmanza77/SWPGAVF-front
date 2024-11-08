@@ -1,24 +1,17 @@
-import { CiGift, CiMusicNote1 } from "react-icons/ci";
-import { GiClothes } from "react-icons/gi";
-import { ImBooks } from "react-icons/im";
-import { IoCarSport, IoFastFoodSharp } from "react-icons/io5";
-import { LuBaby } from "react-icons/lu";
-import { MdElectricBolt, MdHealthAndSafety, MdOutlinePets } from "react-icons/md";
-import { RiBearSmileLine } from "react-icons/ri";
+import { MdElectricBolt } from "react-icons/md";
 import { NavLink } from "react-router-dom";
 
 const items = [
-    { icon: <GiClothes />, title: "Fashion" },
-    { icon: <MdElectricBolt />, title: "Electronic" },
-    { icon: <IoCarSport />, title: "Cars" },
-    { icon: <RiBearSmileLine />, title: "Home & Garden" },
-    { icon: <CiGift />, title: "Gift" },
-    { icon: <CiMusicNote1 />, title: "Music" },
-    { icon: <MdHealthAndSafety />, title: "Health & Beauty" },
-    { icon: <MdOutlinePets />, title: "Pets" },
-    { icon: <LuBaby />, title: "Baby Toys" },
-    { icon: <IoFastFoodSharp />, title: "Groceries" },
-    { icon: <ImBooks />, title: "Books" },
+    { icon: <MdElectricBolt />, title: "Focos LED" },
+    { icon: <MdElectricBolt />, title: "Focos fluorescentes" },
+    { icon: <MdElectricBolt />, title: "Bombillas inteligentes" },
+    { icon: <MdElectricBolt />, title: "Bombillas decorativas" },
+    { icon: <MdElectricBolt />, title: "Paneles solares" },
+    { icon: <MdElectricBolt />, title: "UPSs" },
+    { icon: <MdElectricBolt />, title: "Termostatos inteligentes" },
+    { icon: <MdElectricBolt />, title: "Medidores de consumo eléctrico" },
+    { icon: <MdElectricBolt />, title: "Luces de exteriores" },
+    { icon: <MdElectricBolt />, title: "Luces de emergencia" },
 ]
 
 const Sidebar = () => {

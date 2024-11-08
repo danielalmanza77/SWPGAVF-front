@@ -1,80 +1,99 @@
-
-import { Link } from 'react-router-dom';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios'; 
+import { useUser } from '../../context/UserContext';
+import { Link } from 'react-router-dom';  // Import Link to navigate to Register
 
 const Login = () => {
-    return (
-        <div className="min-h-screen flex bg-gray-100">
-            <div className="flex-1 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-                <div className="max-w-md w-full space-y-8">
-                    <div>
-                        <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-                            Iniciar sesión
-                        </h2>
-                    </div>
-                    <form className="mt-8 space-y-8">
-                        <input type="hidden" name="remember" defaultValue="true" />
-                        <div className="rounded-md shadow-sm space-y-4">
-                            <div>
-                                <label htmlFor="email-address" className="sr-only">Email address</label>
-                                <input
-                                    id="email-address"
-                                    name="email"
-                                    type="email"
-                                    autoComplete="email"
-                                    required
-                                    className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                                    placeholder="Correo electrónico"
-                                />
-                            </div>
-                            <div>
-                                <label htmlFor="password" className="sr-only">Password</label>
-                                <input
-                                    id="password"
-                                    name="password"
-                                    type="password"
-                                    autoComplete="current-password"
-                                    required
-                                    className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                                    placeholder="Contraseña"
-                                />
-                            </div>
-                        </div>
-                        <div>
-                            <button
-                                type="submit"
-                                className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                            >
-                                Ingresar
-                            </button>
-                        </div>
-                        <div className="flex items-center justify-between">
-                            <div className="text-sm">
-                                <Link to="/forgot-password" className="font-medium text-indigo-600 hover:text-indigo-500">
-                                    ¿Olvidaste tu contraseña?
-                                </Link>
-                            </div>
-                            <div className="text-sm">
-                                <Link to="/register" className="font-medium text-indigo-600 hover:text-indigo-500">
-                                    ¿No tienes una cuenta? Créate una
-                                </Link>
-                            </div>
-                        </div>
-                        
-                    </form>
-                </div>
-            </div>
-            <div className="hidden lg:flex flex-1 items-center justify-center bg-gray-100">
-                <div className="max-w-lg w-full">
-                    <img
-                        src="src/uploads/imagen2.gif" // Cambia la URL de la imagen según lo necesites
-                        alt="Login Illustration"
-                        className="w-full h-auto object-contain shadow-lg hover:shadow-xl transition-shadow duration-300"
-                    />
-                </div>
-            </div>
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
+    const { login } = useUser();
+    const navigate = useNavigate();
 
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        try {
+            const response = await axios.get(
+                `http://localhost:8080/users/login?username=${username}&password=${password}`
+            );
+
+            if (response.data) {
+                const user = {
+                    id: response.data.id,
+                    username: response.data.username,
+                    role: response.data.type, 
+                    name: response.data.name,
+                    lastname: response.data.lastname,
+                    email: response.data.email,
+                    phone: response.data.phone,
+                    dob: response.data.dob,
+                };
+
+                login(user);
+
+                if (user.role === 'client') {
+                    navigate('/landing');
+                } else if (user.role === 'employee') {
+                    navigate('/dashboard');
+                }
+            } else {
+                setError('Invalid credentials');
+            }
+        } catch (err) {
+            setError('An error occurred, please try again');
+            console.error(err);
+        }
+    };
+
+    return (
+        <div className="flex items-center justify-center min-h-screen bg-gray-100">
+            <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-sm">
+                <h2 className="text-2xl font-semibold text-center mb-6">Login</h2>
+
+                {error && <p className="text-red-500 text-sm text-center mb-4">{error}</p>}
+
+                <form onSubmit={handleSubmit}>
+                    <div className="mb-4">
+                        <input
+                            type="text"
+                            placeholder="Username"
+                            value={username}
+                            onChange={(e) => setUsername(e.target.value)}
+                            className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                        />
+                    </div>
+
+                    <div className="mb-6">
+                        <input
+                            type="password"
+                            placeholder="Password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                        />
+                    </div>
+
+                    <button
+                        type="submit"
+                        className="w-full bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                    >
+                        Login
+                    </button>
+                </form>
+
+                <div className="mt-4 text-center">
+                    <p className="text-sm">
+                        Don't have an account?{' '}
+                        <Link to="/register" className="text-indigo-600 hover:text-indigo-500">
+                            Register here
+                        </Link>
+                    </p>
+                </div>
+            </div>
         </div>
     );
 };
 
-export default Login
+export default Login;
