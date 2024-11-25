@@ -1,5 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
+import { LineChart } from '@mui/x-charts';
+
 
 const DashboardHome = () => {
     return (
@@ -23,9 +25,28 @@ const DashboardHome = () => {
 
             {/* Gráficos de Ventas */}
             <div className="bg-white rounded-lg shadow-md p-4 mb-4">
-                <h2 className="text-xl font-semibold mb-2">Gráficos de Ventas</h2>
-                {/* Aquí puedes incluir un gráfico, por ejemplo, usando Chart.js o Recharts */}
-                <div className="h-48 bg-gray-200 rounded-lg">[Gráfico de Ventas]</div>
+                <h2 className="text-xl font-semibold mb-2">Gráficos de interpolación Ventas</h2>
+
+                <LineChart
+                    style={{ height: '300px', width: '100%' }}  // Altura fija en 300px
+                    series={[
+                        { curve: "linear", data: [0, 5, 2, 6, 3, 9.3] },
+                        { curve: "linear", data: [6, 3, 7, 9.5, 4, 2] },
+                    ]}
+                />
+
+
+                <h2 className="text-xl font-semibold mb-2">Gráficos de Ventas2</h2>
+                <div style={{ height: '300px' }}>
+                    <LineChart
+                        className='w-full'
+                        series={[
+                            { curve: "linear", data: [0, 5, 2, 6, 3, 9.3] },
+                            { curve: "linear", data: [6, 3, 7, 9.5, 4, 2] },
+                        ]}
+                    />
+                </div>
+
             </div>
 
             {/* Acceso Rápido */}

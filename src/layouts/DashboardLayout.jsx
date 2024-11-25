@@ -11,7 +11,7 @@ const DashboardLayout = () => {
                     <Outlet />
                 </div>
             </div>
-    )
+    )    
 }
 
 export default DashboardLayout

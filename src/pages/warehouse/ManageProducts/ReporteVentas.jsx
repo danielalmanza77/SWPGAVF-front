@@ -1,4 +1,4 @@
-// import axios from 'axios';
+import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -58,23 +58,26 @@ const ReporteVentas = () => {
         try {
             const fechas = habilitarRango
                 ? {
-                    fechaInicio: fechaInicio ? fechaInicio.toISOString().split('T')[0] : null,
-                    fechaFin: fechaFin ? fechaFin.toISOString().split('T')[0] : null,
+                    startDate: fechaInicio ? fechaInicio.toISOString().split('T')[0] : null,
+                    endDate: fechaFin ? fechaFin.toISOString().split('T')[0] : null,
                 }
                 : {
                     fecha: fecha ? fecha.toISOString().split('T')[0] : null,
                 };
-
+    
+            const endpoint = formato === 'pdf' ? 'http://localhost:8080/orders/pdf' : 'http://localhost:8080/orders/excel'; // Ajusta aquí las rutas
+    
             const contentType =
                 formato === 'pdf' ? 'application/pdf' : 'application/vnd.ms-excel';
-
-            const response = await axios.post('/api/reportes/ventas', fechas, {
+    
+            const response = await axios.get(endpoint, {
+                params: fechas,
                 headers: {
                     Accept: contentType,
                 },
                 responseType: 'blob',
             });
-
+    
             const blob = new Blob([response.data], { type: contentType });
             const url = window.URL.createObjectURL(blob);
             const link = document.createElement('a');
@@ -88,13 +91,14 @@ const ReporteVentas = () => {
             );
             document.body.appendChild(link);
             link.click();
-
+    
             agregarMensaje('exito', 'Descarga exitosa');
         } catch (error) {
-            console.error('Error al generar reporte', error);
-            agregarMensaje('error', 'Error al generar el reporte');
+            console.error(`Error al generar el reporte en formato ${formato.toUpperCase()}`, error);
+            agregarMensaje('error', `Error al generar el reporte en formato ${formato.toUpperCase()}`);
         }
     };
+    
 
     return (
         <div className="flex flex-col items-center justify-center h-screen bg-gray-100 p-5">
