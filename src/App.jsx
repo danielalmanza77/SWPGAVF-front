@@ -17,6 +17,7 @@ import AuthLayout from './layouts/AuthLayout';
 import Register from './pages/auth/Register';
 import ReporteVentas from './pages/warehouse/ManageProducts/ReporteVentas';
 import { UserProvider, useUser } from './context/UserContext'; // Import UserContext
+import ManageDelivery from './pages/dashboard/ManageDelivery/ManageDelivery';
 
 function App() {
   return (
@@ -76,6 +77,7 @@ function RoleBasedRoutes() {
           <Route path="users" element={<ManageUsers />} />
           <Route path="kardex" element={<GestionarKardex />} />
           <Route path="reporte-ventas" element={<ReporteVentas />} />
+          <Route path="delivery" element={<ManageDelivery />} />
         </Route>
       )}
     </Routes>

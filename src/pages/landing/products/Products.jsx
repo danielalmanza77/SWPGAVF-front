@@ -77,10 +77,24 @@ const Products = () => {
             <div className='w-[90%] mx-auto py-10 flex gap-x-8'>
                 <div className='w-[25%]'>
                     <ProductFilter onFilterChange={handleFilterChange} />
+                    <div className="w-full p-4 bg-white rounded-md shadow-md mt-6">
+                        <h2>Carrito:</h2>
+                        <ul>
+                            {cartItems.length === 0 ? (
+                                <li>Aún no has agregado productos</li>
+                            ) : (
+                                cartItems.map((item, index) => (
+                                    <li key={index} className='shadow-md rounded-md mb-1'>
+                                        {item.name} <br /> {item.quantity} und
+                                    </li>
+                                ))
+                            )}
+                        </ul>
+                    </div>
                 </div>
                 <div className="grid grid-cols-3 gap-6 w-[75%]">
                     {filteredItems.map((item) => (
-                        <ProductCard 
+                        <ProductCard
                             key={item.id}
                             product={item}
                             onAddToCart={openModal}
@@ -89,25 +103,11 @@ const Products = () => {
                 </div>
             </div>
 
-            <div className="cart-view">
-                <h2>Your Cart</h2>
-                <ul>
-                    {cartItems.length === 0 ? (
-                        <li>No products in the cart</li>
-                    ) : (
-                        cartItems.map((item, index) => (
-                            <li key={index}>
-                                {item.name} - S/ {item.price.toFixed(2)} x {item.quantity}
-                            </li>
-                        ))
-                    )}
-                </ul>
-            </div>
 
             {isModalOpen && selectedProduct && (
-                <ProductModal 
-                    product={selectedProduct} 
-                    onClose={closeModal} 
+                <ProductModal
+                    product={selectedProduct}
+                    onClose={closeModal}
                     onAddToCart={handleAddToCart}
                 />
             )}

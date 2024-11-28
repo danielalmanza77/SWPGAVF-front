@@ -8,6 +8,7 @@ const items = [
     { icon: <AiFillProduct />, title: "Gestionar Kardex", path: "/dashboard/kardex" },
     { icon: <FaUsers />, title: "Gestionar Usuarios", path: "/dashboard/users" },
     { icon: <FaUsers />, title: "Gestionar Proveedores", path: "/dashboard/users" },
+    { icon: <FaUsers />, title: "Gestionar Entregas", path: "/dashboard/delivery" },
     { icon: <FaUsers />, title: "Reporte Ventas", path: "/dashboard/reporte-ventas" },
 ]
 
