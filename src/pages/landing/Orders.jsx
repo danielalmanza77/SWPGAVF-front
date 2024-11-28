@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { NavLink } from 'react-router-dom'; // For navigation to the review component
 
 const Orders = () => {
   const [orders, setOrders] = useState([]);
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isPayModalOpen, setIsPayModalOpen] = useState(false); 
-  const [isProcessingPayment, setIsProcessingPayment] = useState(false); 
+  const [isPayModalOpen, setIsPayModalOpen] = useState(false);
+  const [isProcessingPayment, setIsProcessingPayment] = useState(false);
 
   useEffect(() => {
     const fetchOrders = async () => {
@@ -64,6 +65,14 @@ const Orders = () => {
     setSelectedOrder(null);  // Optionally clear selected order
   };
 
+  // Helper function to determine the color of the status circle
+  const getStatusColor = (status) => {
+    if (status === 'PENDING') return 'bg-yellow-500';
+    if (status === 'PAID') return 'bg-blue-500';
+    if (status === 'DELIVERED') return 'bg-green-500';
+    return 'bg-gray-500'; // default
+  };
+
   return (
     <div className="max-w-4xl mx-auto p-4">
       <h2 className="text-3xl font-bold text-center mb-6">Tus Pedidos</h2>
@@ -83,9 +92,22 @@ const Orders = () => {
                   </p>
                 </div>
                 <div>
+                  <div className="flex space-x-2 mb-4">
+                    {/* Status tracker with circles */}
+                    <div
+                      className={`h-4 w-4 rounded-full ${getStatusColor(order.status)}`}
+                    />
+                    <div
+                      className={`h-4 w-4 rounded-full ${order.status === 'PAID' || order.status === 'DELIVERED' ? getStatusColor(order.status) : 'bg-gray-300'}`}
+                    />
+                    <div
+                      className={`h-4 w-4 rounded-full ${order.status === 'DELIVERED' ? getStatusColor(order.status) : 'bg-gray-300'}`}
+                    />
+                  </div>
+
                   <button
                     className="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition"
-                    onClick={() => handlePay(order)} 
+                    onClick={() => handlePay(order)}
                   >
                     Pagar
                   </button>
@@ -95,6 +117,17 @@ const Orders = () => {
                   >
                     Detalle
                   </button>
+
+                  {/* Add Review button for DELIVERED orders */}
+                  {order.status === 'DELIVERED' && (
+                    <NavLink
+                      to={`/landing/review-order/${order.id}`}
+                      state={{ products: order.products }}
+                      className="bg-green-500 text-white py-2 px-4 rounded-lg ml-2 hover:bg-green-600 transition"
+                    >
+                      Agregar Reseñas
+                    </NavLink>
+                  )}
                 </div>
               </div>
             </li>
@@ -176,39 +209,22 @@ const Orders = () => {
                   />
                 </div>
               </div>
-              <div className="flex space-x-4">
-                <div className="w-1/2">
-                  <label className="block text-sm font-semibold mb-2">Fecha de vencimiento:</label>
-                  <input
-                    type="text"
-                    className="w-full p-2 border border-gray-300 rounded-lg"
-                    placeholder="12/25"
-                  />
-                </div>
-                <div className="w-1/2">
-                  <label className="block text-sm font-semibold mb-2">CVV:</label>
-                  <input
-                    type="text"
-                    className="w-full p-2 border border-gray-300 rounded-lg"
-                    placeholder="123"
-                  />
-                </div>
-              </div>
             </div>
 
-            <div className="mt-4 flex justify-between">
-              <button
-                className="bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600"
-                onClick={closePayModal}
-              >
-                Cerrar
-              </button>
+            {/* Payment Button */}
+            <div className="mt-6 flex justify-between">
               <button
                 className="bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-600"
                 onClick={handlePaymentSubmit}
                 disabled={isProcessingPayment}
               >
-                {isProcessingPayment ? 'Procesando...' : 'Pagar ahora'}
+                {isProcessingPayment ? 'Procesando...' : 'Pagar'}
+              </button>
+              <button
+                className="bg-gray-500 text-white py-2 px-4 rounded-lg hover:bg-gray-600"
+                onClick={closePayModal}
+              >
+                Cancelar
               </button>
             </div>
           </div>

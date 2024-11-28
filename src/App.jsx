@@ -18,6 +18,7 @@ import Register from './pages/auth/Register';
 import ReporteVentas from './pages/warehouse/ManageProducts/ReporteVentas';
 import { UserProvider, useUser } from './context/UserContext'; // Import UserContext
 import ManageDelivery from './pages/dashboard/ManageDelivery/ManageDelivery';
+import ReviewOrder from './pages/landing/ReviewOrder';
 
 function App() {
   return (
@@ -65,6 +66,7 @@ function RoleBasedRoutes() {
           <Route path="products" element={<Products />} />
           <Route path="cart" element={<Cart />} />
           <Route path="orders" element={<Orders />} />
+          <Route path="review-order/:orderId" element={<ReviewOrder />} />
         </Route>
       )}
 
