@@ -106,9 +106,9 @@ const Orders = () => {
       {isModalOpen && selectedOrder && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
           <div className="bg-white p-6 rounded-lg shadow-lg w-3/4 max-w-lg">
-            <h3 className="text-2xl font-semibold mb-4">Order Details</h3>
+            <h3 className="text-2xl font-semibold mb-4">Detalle</h3>
             <div>
-              <h4 className="font-semibold text-lg">Products:</h4>
+              <h4 className="font-semibold text-lg">Productos:</h4>
               <ul>
                 {selectedOrder.products && selectedOrder.products.length > 0 ? (
                   selectedOrder.products.map((product) => (
@@ -128,7 +128,7 @@ const Orders = () => {
                 )}
               </ul>
               <p className="mt-4 text-lg font-semibold">
-                Total: S/ {selectedOrder.amount ? selectedOrder.amount.toFixed(2) : '0.00'}
+                Total: S/ {selectedOrder.amount ? (selectedOrder.amount / 100).toFixed(2) : '0.00'}
               </p>
             </div>
             <div className="mt-6 flex justify-between">
