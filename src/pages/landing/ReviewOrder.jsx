@@ -1,15 +1,14 @@
 import React, { useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { useUser } from '../../context/UserContext'; // Importing the UserContext
 
 const ReviewOrder = () => {
-
     const location = useLocation();
-    console.log('Current location:', location);
-    const { state } = useLocation();
-    console.log('State:', state);
+    const navigate = useNavigate(); // Hook for navigation
+    const { state } = location;
     const { products = [] } = state || {};
-    console.log('Products:', products);  // Log products to check if the data is coming through
+    const { user } = useUser(); // Accessing the user context
 
     const [selectedProduct, setSelectedProduct] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -29,12 +28,23 @@ const ReviewOrder = () => {
     };
 
     const handleSave = async () => {
-        if (!selectedProduct) return;
+        if (!selectedProduct || !user) {
+            console.log("Selected product or user is missing.");
+            return; // Ensure the user and product are available
+        }
 
+        // Log the data being sent to the backend
+        console.log("Sending review data:", {
+            productId: selectedProduct.id,
+            userId: user.id, // Sending userId from the context
+            comment,
+            rating,
+        });
+        
         try {
-            // Call your backend to save the review (use appropriate endpoint)
             const response = await axios.post('http://localhost:8080/reviews', {
                 productId: selectedProduct.id,
+                userId: user.id, // Sending userId from the context
                 comment,
                 rating,
             });
@@ -47,6 +57,10 @@ const ReviewOrder = () => {
             console.error('Error saving review:', error);
             alert('Error al guardar la reseña.');
         }
+    };
+
+    const handleReturn = () => {
+        navigate('/landing/orders'); // Navigate to the "See All Orders" page
     };
 
     return (
@@ -85,6 +99,16 @@ const ReviewOrder = () => {
                     </tbody>
                 </table>
             )}
+
+            {/* Return Button */}
+            <div className="mt-4 flex justify-between">
+                <button
+                    className="bg-gray-500 text-white py-2 px-4 rounded-lg hover:bg-gray-600"
+                    onClick={handleReturn} // Handle return action
+                >
+                    Volver a ver pedidos
+                </button>
+            </div>
 
             {/* Review Modal */}
             {isModalOpen && selectedProduct && (

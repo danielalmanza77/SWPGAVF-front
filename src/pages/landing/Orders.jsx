@@ -181,7 +181,7 @@ const Orders = () => {
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
           <div className="bg-white p-6 rounded-lg shadow-lg w-3/4 max-w-lg">
             <h3 className="text-2xl font-semibold mb-4">Confirm Payment</h3>
-            <p className="text-lg">Monto: S/ {selectedOrder.amount ? selectedOrder.amount.toFixed(2) : '0.00'}</p>
+            <p className="text-lg">Monto: S/ {selectedOrder.amount ? (selectedOrder.amount / 100).toFixed(2) : '0.00'}</p>
 
             {/* Fake Debit Card Form with Placeholders */}
             <div className="mt-6">
@@ -191,25 +191,48 @@ const Orders = () => {
                 className="w-full p-2 border border-gray-300 rounded-lg mb-4"
                 placeholder="4*** **** **** ****" // Fake debit card number
               />
-              <div className="flex space-x-4">
-                <div className="w-1/2">
+
+              <div className="space-y-4"> {/* Changed to vertical stack */}
+                <div>
                   <label className="block text-sm font-semibold mb-2">Nombre:</label>
                   <input
                     type="text"
-                    className="w-full p-2 border border-gray-300 rounded-lg mb-4"
+                    className="w-full p-2 border border-gray-300 rounded-lg"
                     placeholder="Nombre"
                   />
                 </div>
-                <div className="w-1/2">
+
+                <div>
                   <label className="block text-sm font-semibold mb-2">Apellidos:</label>
                   <input
                     type="text"
-                    className="w-full p-2 border border-gray-300 rounded-lg mb-4"
+                    className="w-full p-2 border border-gray-300 rounded-lg"
                     placeholder="Apellidos"
                   />
                 </div>
+
+                {/* New flex layout for Fecha de vencimiento and CVV */}
+                <div className="flex space-x-4">
+                  <div className="w-1/2">
+                    <label className="block text-sm font-semibold mb-2">Fecha de vencimiento:</label>
+                    <input
+                      type="text"
+                      className="w-full p-2 border border-gray-300 rounded-lg"
+                      placeholder="mm/yy"
+                    />
+                  </div>
+                  <div className="w-1/2">
+                    <label className="block text-sm font-semibold mb-2">CVV:</label>
+                    <input
+                      type="text"
+                      className="w-full p-2 border border-gray-300 rounded-lg"
+                      placeholder="***"
+                    />
+                  </div>
+                </div>
               </div>
             </div>
+
 
             {/* Payment Button */}
             <div className="mt-6 flex justify-between">
