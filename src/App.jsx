@@ -19,6 +19,7 @@ import ReporteVentas from './pages/warehouse/ManageProducts/ReporteVentas';
 import { UserProvider, useUser } from './context/UserContext'; // Import UserContext
 import ManageDelivery from './pages/dashboard/ManageDelivery/ManageDelivery';
 import ReviewOrder from './pages/landing/ReviewOrder';
+import KardexDetails from './pages/warehouse/KardexDetails';
 
 function App() {
   return (
@@ -78,6 +79,7 @@ function RoleBasedRoutes() {
           <Route path="catalog" element={<ManageCatalog />} />
           <Route path="users" element={<ManageUsers />} />
           <Route path="kardex" element={<GestionarKardex />} />
+          <Route path="kardex-details" element={<KardexDetails />} />
           <Route path="reporte-ventas" element={<ReporteVentas />} />
           <Route path="delivery" element={<ManageDelivery />} />
         </Route>

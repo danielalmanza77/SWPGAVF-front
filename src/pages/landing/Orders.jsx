@@ -31,16 +31,32 @@ const Orders = () => {
   const handlePaymentSubmit = async () => {
     if (!selectedOrder) return;
     setIsProcessingPayment(true);
-
+  
     try {
       const paymentMethodId = 'pm_card_visa';
-      const response = await axios.post(`http://localhost:8080/orders/${selectedOrder.id}/pay`, { paymentMethodId });
-
+  
+      // Map the order's products to the StockReductionDTO format
+      const stockReductionData = selectedOrder.products.map((product) => ({
+        productId: product.id,  // Assuming the product has an 'id' property
+        quantity: product.quantity,
+      }));
+  
+      // Send the request to reduce stock
+      const response = await axios.post('http://localhost:8080/products/reduce-stock', stockReductionData, {
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      });
+  
       if (response.status === 200) {
-        alert('Payment processed successfully!');
-        setIsPayModalOpen(false); // Close Pay modal
-
-        window.location.reload();
+        // After reducing stock, process the payment
+        const paymentResponse = await axios.post(`http://localhost:8080/orders/${selectedOrder.id}/pay`, { paymentMethodId });
+  
+        if (paymentResponse.status === 200) {
+          alert('Payment processed successfully!');
+          setIsPayModalOpen(false); // Close Pay modal
+          window.location.reload();
+        }
       }
     } catch (error) {
       alert('Error processing payment');
@@ -49,6 +65,9 @@ const Orders = () => {
       setIsProcessingPayment(false);
     }
   };
+  
+  
+  
 
   const openModal = (order) => {
     setSelectedOrder(order);

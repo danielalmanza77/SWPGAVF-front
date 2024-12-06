@@ -5,6 +5,8 @@ const ManageDelivery = () => {
     const [orders, setOrders] = useState([]);
     const [selectedOrder, setSelectedOrder] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [startDate, setStartDate] = useState('');
+    const [endDate, setEndDate] = useState('');
 
     useEffect(() => {
         const fetchOrders = async () => {
@@ -25,9 +27,8 @@ const ManageDelivery = () => {
             const response = await axios.put(`http://localhost:8080/orders/${order.id}/status?status=DELIVERED`);
             if (response.status === 200) {
                 alert('Order marked as delivered!');
-                // Update orders state to reflect the status change
                 setOrders((prevOrders) =>
-                    prevOrders.map((o) => 
+                    prevOrders.map((o) =>
                         o.id === order.id ? { ...o, status: 'DELIVERED' } : o
                     )
                 );
@@ -48,19 +49,56 @@ const ManageDelivery = () => {
         setSelectedOrder(null);
     };
 
+    // Apply date filter
+    const filteredOrders = orders.filter((order) => {
+        const orderDate = new Date(order.orderDate);
+        const start = startDate ? new Date(startDate) : null;
+        const end = endDate ? new Date(endDate) : null;
+
+        if (start && orderDate < start) return false;
+        if (end && orderDate > end) return false;
+
+        return true;
+    });
+
     return (
         <div className="max-w-4xl mx-auto p-4">
             <h2 className="text-3xl font-bold text-center mb-6">Gestionar Entregas</h2>
+
+            {/* Date Range Filter */}
+            <div className="mb-6 flex space-x-4">
+                <div>
+                    <label htmlFor="startDate" className="block text-sm font-medium">Fecha de Inicio</label>
+                    <input
+                        type="date"
+                        id="startDate"
+                        value={startDate}
+                        onChange={(e) => setStartDate(e.target.value)}
+                        className="mt-1 block w-full border-gray-300 rounded-md"
+                    />
+                </div>
+
+                <div>
+                    <label htmlFor="endDate" className="block text-sm font-medium">Fecha de Fin</label>
+                    <input
+                        type="date"
+                        id="endDate"
+                        value={endDate}
+                        onChange={(e) => setEndDate(e.target.value)}
+                        className="mt-1 block w-full border-gray-300 rounded-md"
+                    />
+                </div>
+            </div>
 
             <div className="flex justify-between">
                 {/* Left side - Paid Orders */}
                 <div className="w-1/2 pr-4">
                     <h3 className="text-2xl font-semibold mb-4">Pedidos a Entregar</h3>
-                    {orders.filter((order) => order.status === 'PAID').length === 0 ? (
+                    {filteredOrders.filter((order) => order.status === 'PAID').length === 0 ? (
                         <p>No hay pedidos pagados.</p>
                     ) : (
                         <ul>
-                            {orders.filter((order) => order.status === 'PAID').map((order) => (
+                            {filteredOrders.filter((order) => order.status === 'PAID').map((order) => (
                                 <li key={order.id} className="bg-white border border-gray-200 rounded-lg shadow-lg mb-4 p-6">
                                     {/* Order info */}
                                     <div className="flex justify-between items-center mb-4">
@@ -93,11 +131,11 @@ const ManageDelivery = () => {
                 {/* Right side - Delivered Orders */}
                 <div className="w-1/2 pl-4">
                     <h3 className="text-2xl font-semibold mb-4">Pedidos Entregados</h3>
-                    {orders.filter((order) => order.status === 'DELIVERED').length === 0 ? (
+                    {filteredOrders.filter((order) => order.status === 'DELIVERED').length === 0 ? (
                         <p>No hay pedidos entregados.</p>
                     ) : (
                         <ul>
-                            {orders.filter((order) => order.status === 'DELIVERED').map((order) => (
+                            {filteredOrders.filter((order) => order.status === 'DELIVERED').map((order) => (
                                 <li key={order.id} className="bg-white border border-gray-200 rounded-lg shadow-lg mb-4 p-6">
                                     {/* Order info */}
                                     <div className="flex justify-between items-center mb-4">
